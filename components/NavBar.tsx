@@ -5,7 +5,7 @@ import { GoogleAuthProvider, signInWithRedirect } from "firebase/auth";
 
 const NavBar = () => {
   const [user] = useAuthState(auth);
-  
+
   const googleSignIn = () => {
     const provider = new GoogleAuthProvider();
     signInWithRedirect(auth, provider);
