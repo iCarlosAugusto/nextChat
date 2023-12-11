@@ -5,13 +5,13 @@ import { InputComponent } from "../../components/Input";
 import { ButtonComponent } from "@/components/Button";
 import Image from 'next/image';
 import GoogleIcon from "../../../public/google.svg";
-import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "@/firebase";
 import { GoogleAuthProvider, signInWithRedirect } from "firebase/auth";
+import { useRouter } from "next/navigation";
 
 export default function Login() {
   
-  const [user] = useAuthState(auth);
+  const router = useRouter();
   const [userEmail, setUserEmail] = useState("");
   const [userPassword, setUserPassword] = useState("");
 
@@ -19,9 +19,10 @@ export default function Login() {
 
   }
 
-  const handleAuthenticateGoogle = () => {
+  const handleAuthenticateGoogle = async () => {
     const provider = new GoogleAuthProvider();
-    signInWithRedirect(auth, provider);
+    await signInWithRedirect(auth, provider);
+    router.push("/chat");
   }
 
   return (
