@@ -1,16 +1,22 @@
 "use client";
-
-import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from "../firebase";
-import NavBar from "../components/NavBar";
+import { onAuthStateChanged } from "firebase/auth";
+import { useRouter } from "next/navigation";
 
 export default function Home() {
-  const [user] = useAuthState(auth);
+  const router = useRouter();
+
+  onAuthStateChanged(auth, (user) => {
+    if(user){
+      router.push("/chat")
+    } else {
+      router.push("/login")
+    }
+  })
 
   return (
     <main>
-      <NavBar />
-      {!user ? <p> Não está logado</p> : <p> Estálogad </p>}
+      <h1>Carregando...</h1>
     </main>
   );
 }
